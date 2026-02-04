@@ -75,22 +75,32 @@ public class ResultsActivity extends BaseActivity {
     }
 
     private void displayResults() {
+        // The 'players' list is already initialized and sorted in onCreate
+        // if (players == null || players.isEmpty()) return; // This check is handled by the 'if (players != null)' in onCreate
+
         Player winner = players.get(0);
         binding.winnerName.setText(winner.getName());
         binding.winnerScore.setText(winner.getScore() + " points");
 
         binding.finalScoresContainer.removeAllViews();
-        String[] rankEmojis = {"🥇", "🥈", "🥉", "🏅"};
+        String[] rankIcons = {"🥇", "🥈", "🥉", "🏅"};
 
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
-            ScoreItemLayoutBinding itemBinding = ScoreItemLayoutBinding.inflate(getLayoutInflater(), binding.finalScoresContainer, true);
-            
-            itemBinding.positionText.setText(i < rankEmojis.length ? rankEmojis[i] : (i + 1) + ".");
+            ScoreItemLayoutBinding itemBinding = ScoreItemLayoutBinding.inflate(
+                getLayoutInflater(), binding.finalScoresContainer, true);
+
+            String rankText = (i < rankIcons.length) ? rankIcons[i] : String.valueOf(i + 1);
+            itemBinding.positionText.setText(rankText);
+            itemBinding.positionText.setBackground(null); // Remove circle background for emojis
             itemBinding.playerName.setText(p.getName());
-            itemBinding.playerName.setTextColor(Color.parseColor(p.getColor()));
             itemBinding.playerScore.setText(p.getScore() + " pts");
-            itemBinding.scoreIndicator.setBackgroundColor(Color.parseColor(p.getColor()));
+
+            try {
+                itemBinding.scoreIndicator.setBackgroundColor(Color.parseColor(p.getColor()));
+            } catch (Exception e) {
+                itemBinding.scoreIndicator.setBackgroundColor(Color.parseColor("#E11D48"));
+            }
         }
     }
 

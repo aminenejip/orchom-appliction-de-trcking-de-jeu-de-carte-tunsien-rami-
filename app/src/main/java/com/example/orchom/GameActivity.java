@@ -87,33 +87,25 @@ public class GameActivity extends BaseActivity {
                 getLayoutInflater(), binding.roundInputsContainer, true);
             
             itemBinding.playerNameText.setText(p.getName());
-            itemBinding.playerNameText.setTextColor(Color.parseColor(p.getColor()));
             itemBinding.currentScoreText.setText(p.getScore() + " pts");
             
-            itemBinding.btnGhalta.setText("Ghalta (" + ghaltaVal + ")");
+            itemBinding.btnGhalta.setText("+" + ghaltaVal);
             itemBinding.btnGhalta.setOnClickListener(v -> {
                 String current = itemBinding.scoreInput.getText().toString();
                 int score = current.isEmpty() ? 0 : Integer.parseInt(current);
                 itemBinding.scoreInput.setText(String.valueOf(score + ghaltaVal));
             });
 
+            // Boutons de raccourcis rapides pour le gagnant (clash auto)
             itemBinding.btnWin10.setOnClickListener(v -> itemBinding.scoreInput.setText("-10"));
             itemBinding.btnWin20.setOnClickListener(v -> itemBinding.scoreInput.setText("-20"));
             itemBinding.btnWinRalta.setOnClickListener(v -> itemBinding.scoreInput.setText("-100"));
 
-            itemBinding.winnerCheckbox.setOnCheckedChangeListener((cb, isChecked) -> {
-                if (isChecked) {
-                    // Un seul gagnant à la fois
-                    for (RoundScoreInputItemBinding other : inputBindings) {
-                        if (other != itemBinding) other.winnerCheckbox.setChecked(false);
-                    }
-                }
-                // Afficher/masquer les sections appropriées
-                itemBinding.loserInputSection.setVisibility(isChecked ? View.GONE : View.VISIBLE);
-                itemBinding.btnWin10.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-                itemBinding.btnWin20.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-                itemBinding.btnWinRalta.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-            });
+            // Note: On peut garder ces boutons visibles pour tous, ou les gérer dynamiquement.
+            // Pour l'instant on les laisse accessibles comme raccourcis efficaces.
+            itemBinding.btnWin10.setVisibility(View.VISIBLE);
+            itemBinding.btnWin20.setVisibility(View.VISIBLE);
+            itemBinding.btnWinRalta.setVisibility(View.VISIBLE);
 
             inputBindings.add(itemBinding);
         }
@@ -121,56 +113,48 @@ public class GameActivity extends BaseActivity {
 
     private void validateRound() {
         List<Player> players = gameManager.getPlayers();
-        if (players == null || players.isEmpty()) {
-            Toast.makeText(this, "Aucun joueur trouvé", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        if (players == null || players.isEmpty()) return;
 
-        // Trouver le gagnant
-        int winnerIdx = -1;
-        for (int i = 0; i < inputBindings.size(); i++) {
-            if (inputBindings.get(i).winnerCheckbox.isChecked()) {
-                winnerIdx = i;
-                break;
-            }
-        }
-
-        if (winnerIdx == -1) {
-            Toast.makeText(this, "Sélectionnez le gagnant", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Valider et récupérer les scores
         int[] scores = new int[players.size()];
+        int minScore = Integer.MAX_VALUE;
+
+        // Récupérer tous les scores et trouver le minimum
         for (int i = 0; i < players.size(); i++) {
             String val = inputBindings.get(i).scoreInput.getText().toString().trim();
             if (val.isEmpty()) {
-                Toast.makeText(this, "Points manquants pour " + players.get(i).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Score manquant pour " + players.get(i).getName(), Toast.LENGTH_SHORT).show();
                 return;
             }
             try {
                 scores[i] = Integer.parseInt(val);
+                if (scores[i] < minScore) {
+                    minScore = scores[i];
+                }
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Score invalide pour " + players.get(i).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Score invalide", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
 
-        // Ajouter les scores
+        // Ajouter les scores au GameManager
         for (int i = 0; i < players.size(); i++) {
             players.get(i).addRoundScore(scores[i]);
         }
 
+        // Passer à la manche suivante
         gameManager.startNextRound();
         gameManager.saveGame(this);
         refreshUI();
         checkForGameOver();
 
-        // Réinitialiser les inputs
+        // Réinitialiser les champs de saisie
         for (RoundScoreInputItemBinding b : inputBindings) {
             b.scoreInput.setText("");
+            // b.winnerCheckbox n'est plus utilisé manuellement mais on le reset par sécurité
             b.winnerCheckbox.setChecked(false);
         }
+        
+        Toast.makeText(this, "Manche validée ✅", Toast.LENGTH_SHORT).show();
     }
 
     private void refreshUI() {
@@ -194,7 +178,8 @@ public class GameActivity extends BaseActivity {
         Collections.sort(players, (p1, p2) -> Integer.compare(p1.getScore(), p2.getScore()));
 
         GameConfig config = gameManager.getCurrentConfig();
-        int dangerThreshold = config != null ? (int)(config.targetScore * 0.8) : 800;
+        int targetScore = config != null ? config.targetScore : 500;
+        int dangerThreshold = (int)(targetScore * 0.8);
 
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
@@ -205,22 +190,23 @@ public class GameActivity extends BaseActivity {
             cardBinding.playerName.setText(p.getName());
             cardBinding.playerScore.setText(String.valueOf(p.getScore()));
             
-            try {
-                cardBinding.colorIndicator.setBackgroundColor(Color.parseColor(p.getColor()));
-            } catch (IllegalArgumentException e) {
-                cardBinding.colorIndicator.setBackgroundColor(Color.parseColor("#3498DB"));
+            // Logic de couleur du score
+            if (p.getScore() >= targetScore) {
+                cardBinding.playerScore.setTextColor(Color.parseColor("#EF4444")); // Rouge Danger (Perdu)
+                cardBinding.rankPosition.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#0F172A")));
+            } else if (p.getScore() > dangerThreshold) {
+                cardBinding.playerScore.setTextColor(Color.parseColor("#F59E0B")); // Orange Warning
+                cardBinding.rankPosition.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#E11D48")));
+            } else {
+                cardBinding.playerScore.setTextColor(Color.parseColor("#0F172A")); // Normal
+                cardBinding.rankPosition.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("#10B981")));
             }
 
-            // Colorer le score en fonction de la performance
-            if (p.getScore() < 0) {
-                // Score négatif = très bon
-                cardBinding.playerScore.setTextColor(Color.parseColor("#27AE60"));
-            } else if (p.getScore() > dangerThreshold) {
-                // Score proche de la limite = danger
-                cardBinding.playerScore.setTextColor(Color.parseColor("#E74C3C"));
-            } else {
-                // Score normal
-                cardBinding.playerScore.setTextColor(Color.parseColor("#34495E"));
+            // Couleur de l'indicateur personnalisée du joueur
+            try {
+                cardBinding.colorIndicator.setBackgroundColor(Color.parseColor(p.getColor()));
+            } catch (Exception e) {
+                cardBinding.colorIndicator.setBackgroundColor(Color.parseColor("#E11D48"));
             }
         }
     }

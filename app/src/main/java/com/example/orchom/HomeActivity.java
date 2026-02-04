@@ -24,15 +24,15 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setupClickListeners() {
-        binding.newGameCard.setOnClickListener(v -> {
+        binding.newGameButton.setOnClickListener(v -> {
             startActivity(new Intent(this, SetupActivity.class));
         });
 
-        binding.historyCard.setOnClickListener(v -> {
+        binding.historyButton.setOnClickListener(v -> {
             startActivity(new Intent(this, HistoryActivity.class));
         });
 
-        binding.resumeCard.setOnClickListener(v -> {
+        binding.resumeButton.setOnClickListener(v -> {
             startActivity(new Intent(this, GameActivity.class));
         });
     }
@@ -42,11 +42,11 @@ public class HomeActivity extends BaseActivity {
         gameManager.restoreGame(getApplicationContext());
 
         if (gameManager.isGameActive()) {
-            binding.resumeCard.setVisibility(View.VISIBLE);
-            binding.resumeCard.setAlpha(0f);
-            binding.resumeCard.animate().alpha(1f).setDuration(300).start();
+            binding.resumeButton.setVisibility(View.VISIBLE);
+            binding.resumeButton.setAlpha(0f);
+            binding.resumeButton.animate().alpha(1f).setDuration(300).start();
         } else {
-            binding.resumeCard.setVisibility(View.GONE);
+            binding.resumeButton.setVisibility(View.GONE);
         }
     }
 

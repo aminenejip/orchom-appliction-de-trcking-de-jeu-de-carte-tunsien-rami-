@@ -1,169 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingVertical="12dp"
-    android:background="@drawable/item_background_border">
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#0D000000">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="12dp">
-
-        <CheckBox
-            android:id="@+id/winnerCheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gagnant"
-            android:textSize="12sp"
-            android:layout_marginEnd="8dp" />
-
-        <TextView
-            android:id="@+id/playerNameText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Joueur"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="#333333" />
-
-        <TextView
-            android:id="@+id/currentScoreText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0 pts"
-            android:textSize="12sp"
-            android:textColor="@color/text_secondary"
-            android:layout_marginEnd="8dp" />
-    </LinearLayout>
-
-    <!-- Loser Input Section -->
-    <LinearLayout
-        android:id="@+id/loserInputSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="8dp"
-        android:paddingHorizontal="12dp">
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_marginBottom="12dp">
 
-            <EditText
-                android:id="@+id/scoreInput"
+            <TextView
+                android:id="@+id/playerNameText"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="48dp"
-                android:background="@drawable/edittext_background"
-                android:hint="Entrez les points"
-                android:inputType="number"
-                android:paddingHorizontal="12dp"
-                android:textSize="14sp" />
+                android:text="Joueur"
+                android:textColor="@color/text_main_light"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/actionButtonsContainer"
+            <TextView
+                android:id="@+id/currentScoreText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="8dp">
+                android:text="142 pts"
+                android:textColor="@color/text_muted_light"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnGhalta"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="Ghalta"
-                    android:padding="0dp"
-                    android:minWidth="60dp"
-                    android:textSize="12sp" />
-
-                <!-- Placeholder for winner buttons (10, 20, Ralta) which will be handled in code -->
-                <Button
-                    android:id="@+id/btnWin10"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="44dp"
-                    android:layout_height="40dp"
-                    android:text="10"
-                    android:visibility="gone"
-                    android:padding="0dp"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/btnWin20"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="44dp"
-                    android:layout_height="40dp"
-                    android:text="20"
-                    android:visibility="gone"
-                    android:padding="0dp"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/btnWinRalta"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="Ralta"
-                    android:visibility="gone"
-                    android:padding="0dp"
-                    android:minWidth="60dp"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
+            <!-- Hidden for automatic mode, but kept for compatibility -->
+            <CheckBox
+                android:id="@+id/winnerCheckbox"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:visibility="gone" />
         </LinearLayout>
-    </LinearLayout>
 
-    <!-- Winner Options Section -->
-    <LinearLayout
-        android:id="@+id/winnerOptionsSection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_marginTop="8dp"
-        android:paddingHorizontal="12dp">
-
-        <RadioGroup
-            android:id="@+id/winTypeGroup"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radioStandard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Normal (-10)"
-                android:checked="true"
-                android:textSize="12sp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/scoreInput"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_score_input"
+                android:gravity="center"
+                android:hint="0"
+                android:fontFamily="sans-serif-black"
+                android:inputType="numberSigned"
+                android:textColor="@color/text_main_light"
+                android:textSize="22sp" />
 
-            <RadioButton
-                android:id="@+id/radioRalta"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGhalta"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ralta"
+                android:layout_height="56dp"
+                android:layout_marginStart="12dp"
+                android:text="GHALTA"
+                android:textStyle="bold"
                 android:textSize="12sp"
-                android:layout_marginStart="16dp" />
-            
-            <EditText
-                android:id="@+id/raltaScoreInput"
-                android:layout_width="60dp"
+                app:cornerRadius="14dp"
+                app:backgroundTint="@color/primary"
+                android:paddingHorizontal="16dp" />
+        </LinearLayout>
+
+        <!-- Container for Quick Actions (Loser/Winner specific) -->
+        <LinearLayout
+            android:id="@+id/quickActionsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <!-- Loser section -->
+            <LinearLayout
+                android:id="@+id/loserInputSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!-- Can add quick points here if needed -->
+            </LinearLayout>
+
+            <!-- Winner section (Automated) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWin10"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="40dp"
-                android:background="@drawable/edittext_background"
-                android:hint="Pts"
-                android:inputType="number"
-                android:paddingHorizontal="8dp"
-                android:textSize="12sp"
+                android:text="-10"
+                android:visibility="gone"
+                app:strokeColor="@color/success"
+                android:textColor="@color/success"
+                app:cornerRadius="10dp" />
+            
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWin20"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:text="-20"
+                android:visibility="gone"
                 android:layout_marginStart="8dp"
-                android:visibility="gone" />
-        </RadioGroup>
-    </LinearLayout>
+                app:strokeColor="@color/success"
+                android:textColor="@color/success"
+                app:cornerRadius="10dp" />
 
-</LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWinRalta"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:text="RALTA"
+                android:visibility="gone"
+                android:layout_marginStart="8dp"
+                app:strokeColor="@color/success"
+                android:textColor="@color/success"
+                app:cornerRadius="10dp" />
+                
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

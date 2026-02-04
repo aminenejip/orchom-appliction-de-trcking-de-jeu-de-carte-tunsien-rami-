@@ -1,176 +1,280 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_light"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="24dp">
 
-        <!-- Game Name -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="@string/game_name_hint">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/gameNameInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Player Count -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/player_count"
-            android:textSize="16sp"
+            android:text="Nouvelle Partie"
+            android:textColor="@color/text_main_light"
+            android:textSize="28sp"
+            android:fontFamily="sans-serif-black"
+            android:layout_marginBottom="32dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Détails"
+            android:textColor="@color/text_muted_light"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="12dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="0dp">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                app:boxBackgroundMode="none">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/gameNameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:paddingHorizontal="20dp"
+                    android:hint="Nom de la partie"
+                    android:inputType="text"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Joueurs"
+            android:textColor="@color/text_muted_light"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="12dp" />
 
         <RadioGroup
             android:id="@+id/playerCountGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal">
+            <RadioButton
                 android:id="@+id/twoPlayers"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_weight="1"
-                android:text="@string/two_players"
-                android:checked="true" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/selector_setup_card"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="2 JOUEURS"
+                android:textStyle="bold"
+                android:textColor="@drawable/selector_setup_text" />
+            <RadioButton
                 android:id="@+id/fourPlayers"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_weight="1"
-                android:text="@string/four_players" />
+                android:layout_marginStart="8dp"
+                android:background="@drawable/selector_setup_card"
+                android:button="@null"
+                android:gravity="center"
+                android:text="4 JOUEURS"
+                android:textStyle="bold"
+                android:textColor="@drawable/selector_setup_text" />
         </RadioGroup>
 
-        <!-- Player Names -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/player1InputLayout"
+        <LinearLayout
+            android:id="@+id/playerInputsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Joueur 1">
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/player1NameInput"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/player1InputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/player1NameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:paddingHorizontal="20dp"
+                    android:hint="Joueur 1"
+                    android:inputType="text" />
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/player2InputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Joueur 2">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/player2NameInput"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/player2InputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/player2NameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:paddingHorizontal="20dp"
+                    android:hint="Joueur 2"
+                    android:inputType="text" />
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/player3InputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Joueur 3"
-            android:visibility="gone">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/player3NameInput"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/player3InputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="12dp"
+                android:visibility="gone"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/player3NameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:paddingHorizontal="20dp"
+                    android:hint="Joueur 3"
+                    android:inputType="text" />
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/player4InputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="Joueur 4"
-            android:visibility="gone">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/player4NameInput"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/player4InputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginBottom="12dp"
+                android:visibility="gone"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/player4NameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:paddingHorizontal="20dp"
+                    android:hint="Joueur 4"
+                    android:inputType="text" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
-        <!-- Target Score -->
-        <com.google.android.material.textfield.TextInputLayout
+        <View android:layout_width="match_parent" android:layout_height="24dp" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="@string/target_score">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/finalScoreInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="500" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Ghalta Value -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ghalta_value"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-
-        <RadioGroup
-            android:id="@+id/ghaltaValueGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="24dp">
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/ghalta50"
+            android:orientation="horizontal">
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="50"
-                android:checked="true" />
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Score limite"
+                    android:textColor="@color/text_muted_light"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/finalScoreInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@android:color/transparent"
+                        android:text="500"
+                        android:inputType="number"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/ghalta100"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="100" />
-        </RadioGroup>
+                android:layout_marginStart="8dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ghalta"
+                    android:textColor="@color/text_muted_light"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+                <RadioGroup
+                    android:id="@+id/ghaltaValueGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:background="@drawable/bg_ghalta_toggle"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/ghalta50"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_ghalta_card"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="50"
+                        android:textStyle="bold"
+                        android:textColor="@drawable/selector_setup_text" />
+                    <RadioButton
+                        android:id="@+id/ghalta100"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_ghalta_card"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="100"
+                        android:textStyle="bold"
+                        android:textColor="@drawable/selector_setup_text" />
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
 
-        <!-- Start Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/startGameButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_start_game"
-            android:padding="16dp"
-            android:textSize="16sp" />
+            android:layout_height="64dp"
+            android:layout_marginTop="48dp"
+            android:text="COMMENCER"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:cornerRadius="20dp"
+            app:backgroundTint="@color/primary"
+            app:elevation="8dp" />
+
+        <View android:layout_width="match_parent" android:layout_height="40dp" />
 
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
