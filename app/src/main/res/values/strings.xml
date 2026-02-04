@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Orchom</string>
+
+    <!-- Home Screen -->
+    <string name="home_title">Orchom - Rami Tunisien</string>
+    <string name="btn_new_game">Nouvelle Partie</string>
+    <string name="btn_resume">Reprendre</string>
+    <string name="btn_history">Historique</string>
+
+    <!-- Setup Screen -->
+    <string name="setup_title">Configuration</string>
+    <string name="game_name_hint">Nom de la partie (optionnel)</string>
+    <string name="player_count">Nombre de joueurs</string>
+    <string name="two_players">2 Joueurs</string>
+    <string name="four_players">4 Joueurs</string>
+    <string name="player_name_hint">Nom du joueur %1$d</string>
+    <string name="target_score">Score limite</string>
+    <string name="ghalta_value">Valeur Ghalta</string>
+    <string name="btn_start_game">Demarrer la partie</string>
+
+    <!-- Game Screen -->
+    <string name="game_title">Partie en cours</string>
+    <string name="round_number">MANCHE %1$d</string>
+    <string name="target_objective">Objectif : +%1$d pts</string>
+    <string name="btn_validate_round">Valider la manche</string>
+    <string name="btn_end_game">Terminer la partie</string>
+    <string name="winner_checkbox">Gagnant</string>
+    <string name="btn_ghalta">Ghalta (%1$d)</string>
+    <string name="btn_win_10">-10</string>
+    <string name="btn_win_20">-20</string>
+    <string name="btn_win_ralta">-100 (Ralta)</string>
+
+    <!-- Results Screen -->
+    <string name="results_title">Resultats</string>
+    <string name="winner_label">Gagnant</string>
+    <string name="btn_new_game_menu">Nouvelle Partie</string>
+    <string name="btn_delete_game">Supprimer</string>
+    <string name="btn_upload_image">Ajouter une photo</string>
+
+    <!-- History Screen -->
+    <string name="history_title">Historique</string>
+    <string name="tab_games">PARTIES</string>
+    <string name="tab_summary">RESUME</string>
+    <string name="empty_history">Aucune partie jouee</string>
+
+    <!-- Common -->
+    <string name="pts">pts</string>
+    <string name="cancel">Annuler</string>
+    <string name="confirm">Confirmer</string>
+    <string name="delete">Supprimer</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+</resources>
